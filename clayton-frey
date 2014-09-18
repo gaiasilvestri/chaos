@@ -1,0 +1,33 @@
+% clayton-frey model of memory
+% Gaia Silvestri 57854101
+% November 1st 2013
+n=99;
+x=zeros(n+1,1);%disposition to respond correctly in some memory task
+y=zeros(n+1,1);%disposition to respond incorrectly in some memory task
+
+%when competition is high and ry and rn are close and small they kill
+%eachother... if you make r's far apart and smaller competition they do not
+%die. This also depends on the starting point, if some starting point for x
+%is super dominant it may stay there etc... 
+%when k and c are big chaotic behavior gets killed! 
+%if r is large, the chaotic jumping happens between values farther apart
+%(higher values). If r is small, the chaotic jumping happens between small
+%values.
+
+ryes=1.5;       %1<ryes
+rno=0.5;      %rno<3
+c=0.358;        %0<c<1 represents competition between x and y
+k=13;          %constant that limits growth of each disposition to capacity of working memory
+x(1,1)=0.3;
+y(1,1)=0.3;
+
+
+for j=1:n
+    
+    x(j+1,1)= x(j,1)+(1-((x(j,1)+y(j,1))/k))*ryes*x(j,1)-(c*x(j,1)*y(j,1));
+    y(j+1,1)= y(j,1)+(1-((x(j,1)+y(j,1))/k))*rno*y(j,1)-(c*x(j,1)*y(j,1));
+end
+
+plot(x);
+hold on
+plot(y,'m');
