@@ -1,0 +1,42 @@
+% chaos: logistic difference equation
+n=999; %number of iterations is n+1.
+x=zeros(n+1,1); %array holding x values is as large as the number of iterations
+y=zeros(n+1,1);%array holding uniformly distributed pseudorandom integers
+x(1,1)=rand; %x(1) is a random number between 0 and 1.
+correlmatrix1=zeros(100,1);
+correlmatrix2=zeros(100,1);
+
+a=4; % a=4 necessary when you do corr to show chaos!!!
+
+
+
+for i=1:n
+   
+    x(i+1,1)=a*x(i,1)-a*(x(i,1))^2;
+    
+end
+
+%to round to 2 decimal data=round
+
+for j=1:n+1
+x(j,1)=round((x(j,1)*1000)/1000);
+end
+
+
+% matrix to hold elements of x sampled every 5 indices, for correlation
+% computation
+
+
+j=5;
+for k=1:100
+correlmatrix1(k,1)= x(j,1);
+j=j+5;
+end
+
+k=10;
+for p=1:100
+correlmatrix2(p,1)= x(k,1);
+k=k+10;
+end
+
+RHO1=corr(correlmatrix1,correlmatrix2);
